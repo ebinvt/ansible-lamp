@@ -21,7 +21,21 @@
         src: virtualhost.conf.tmpl
         dest: "/etc/httpd/conf.d/default.conf"
         owner: "{{ httpd_owner }}"
-        group: "{{ httpd_group }}"        
+        group: "{{ httpd_group }}"
+
+    - name: "Creating DocumentRoot /var/www/html/{{httpd_hostname}}"
+      file:
+        path: "/var/www/html/{{httpd_hostname}}"
+        state: directory
+        owner: "{{ httpd_owner }}"
+        group: "{{ httpd_group }}"
+
+    - name: "Creating Test Files Inside Documents Root"
+      copy:
+        src: test.html
+        dest: "/var/www/html/{{httpd_hostname}}"
+        owner: "{{ httpd_owner }}"
+        group: "{{ httpd_group }}"
             
     - name: "ReStarting/Enabling Service"
       service:
