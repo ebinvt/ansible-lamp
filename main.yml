@@ -37,11 +37,14 @@
 
     - name: "Creating Test Files Inside Documents Root"
       copy:
-        src: test.html
+        src: "{{ item }}"
         dest: "/var/www/html/{{httpd_hostname}}"
         owner: "{{ httpd_owner }}"
         group: "{{ httpd_group }}"
-            
+      with_items:  
+        - test.html
+        - test.php
+
     - name: "ReStarting/Enabling Service"
       service:
         name: httpd
